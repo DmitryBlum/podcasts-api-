@@ -109,11 +109,8 @@ def test_signature(key, signature):
 
 
 def test_hooks(client):
-    _sign = generate_signature(xml_example.encode('utf8'), 'QWE-QWE')
-    headers = {
-        'X-Hub-Signature': f'sha1={_sign}',
-    }
-    resp = client.post('/hooks/new/pytest_channel_sub_id', data=xml_example, headers=headers)
+    resp = client.post('/hooks/new/pytest_channel_sub_id', data=xml_example)
+
     assert resp.status_code == 200
     assert resp.is_json is True
     assert resp.json['status'] == 'success'

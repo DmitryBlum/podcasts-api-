@@ -14,7 +14,7 @@ from app.objects.download_task import DownloadTask
 from app.objects.entry import Entry, AudioFile, ImageFile, Channel
 
 
-@celery.task(name='media_manager.download')
+@celery.task
 def download(task: DownloadTask):
     _download(task)
 

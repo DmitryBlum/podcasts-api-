@@ -39,6 +39,5 @@ jobs:
       run: pytest webapp
     - name: Run Mediamanager tests
       run: pytest mediamanager
-    # Uncomment when at least one test is introduced
-    # - name: Run Publisher tests
-    #   run: pytest publisher
+    - name: Run Publisher tests
+      run: pytest mediamanager

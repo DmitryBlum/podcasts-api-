@@ -25,6 +25,9 @@ from app.models.source_channels import SourceChannel
 class YoutubeVideo(TimestampMixin, ext.SerializeMixin, ext.QueryMixin, db.Model):
     __tablename__ = 'youtube_videos'
 
+class YoutubeVideo(TimestampMixin, db.Model):
+    __tablename__ = 'youtube_videos'
+
     id = db.Column(db.Integer, primary_key=True)
     yt_id = db.Column(db.String, nullable=False)
     channel_id = db.Column(db.Integer, db.ForeignKey('source_channels.id'), nullable=False)
@@ -42,12 +45,24 @@ class YoutubeVideo(TimestampMixin, ext.SerializeMixin, ext.QueryMixin, db.Model)
             channel=channel,
             title=xml['title'],
             uri=xml['link']['@href'],
-            yt_published=parser.parse(xml['published']),
-            yt_updated=parser.parse(xml['updated']),
+            yt_published=xml['published'],
+            yt_updated=xml['updated'],
         )
 
+    def to_json(self):
+        return {
+            'id': self.id,
+            'yt_id': self.yt_id,
+            'channel_id': self.channel_id,
+            'title': self.title,
+            'uri': self.uri,
+            'yt_published': self.yt_published,
+            'yt_updated': self.yt_updated,
+        }
 
-class RecordTag(ext.SerializeMixin, ext.QueryMixin, db.Model):
+
+class RecordTag(db.Model):
+
     __tablename__ = 'record_tags'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -56,7 +71,8 @@ class RecordTag(ext.SerializeMixin, ext.QueryMixin, db.Model):
     record = db.relationship('Record', backref=db.backref('tags', lazy=False), lazy='joined')
 
 
-class Record(TimestampMixin, ext.SerializeMixin, ext.QueryMixin, db.Model):
+class Record(TimestampMixin, db.Model):
+
     __tablename__ = 'records'
 
     id = db.Column(db.Integer, primary_key=True)
