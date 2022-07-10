@@ -13,11 +13,17 @@
     <updated>2015-03-09T19:05:24.552394234+00:00</updated>
 </entry>
 """
+import flask_sqlalchemy_extension as ext
+from dateutil import parser
+
 from app import db
 from app.models.mixins import TimestampMixin
 from app.models.files import File
 from app.models.source_channels import SourceChannel
 
+
+class YoutubeVideo(TimestampMixin, ext.SerializeMixin, ext.QueryMixin, db.Model):
+    __tablename__ = 'youtube_videos'
 
 class YoutubeVideo(TimestampMixin, db.Model):
     __tablename__ = 'youtube_videos'
@@ -56,6 +62,7 @@ class YoutubeVideo(TimestampMixin, db.Model):
 
 
 class RecordTag(db.Model):
+
     __tablename__ = 'record_tags'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -65,6 +72,7 @@ class RecordTag(db.Model):
 
 
 class Record(TimestampMixin, db.Model):
+
     __tablename__ = 'records'
 
     id = db.Column(db.Integer, primary_key=True)

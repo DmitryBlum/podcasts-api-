@@ -16,6 +16,7 @@ docker build -t volunteer-prb/podcasts-api-mediamanager .
 export DOWNLOAD_PATH=<parent_path_to_save_files>
 export DATABASE_URI=<database connection string, e.g. postgresql://postgres:qwerty@localhost/youtube_podcasts>
 celery --app=app.downloader --broker=redis://localhost worker --loglevel=INFO
+
 ```
 
 #### In docker 
@@ -24,6 +25,7 @@ docker run -e DOWNLOAD_PATH=<parent_path_to_save_files> \
   -e DATABASE_URI=<database connection string, e.g. postgresql://postgres:qwerty@localhost/youtube_podcasts>
   -e BROKER_URL=<redis_host> \
   --name publisher --rm \
+
   volunteer-prb/podcasts-api-mediamanager
 ```
 
